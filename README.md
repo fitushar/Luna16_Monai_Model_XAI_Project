@@ -46,8 +46,8 @@ plp-capri.dhe.duke.edu: /data/usr/ft42/nobackup/LUNGS_XAI_DATA/LUNA16_datasplit
 This split file containes the 10 predified foldes proposed by Luna16 Challange, annotations and Labels
 
 **2.**  Now need to edit the the environment file amd give the appropriate path based on your systems amd directories.
-```
-**Files: plp-capri.dhe.duke.edu:/data/usr/ft42/CVIT_XAI/MONAI/detection/config/environment_luna16_prepare.json**
+```ruby
+Files: plp-capri.dhe.duke.edu:/data/usr/ft42/CVIT_XAI/MONAI/detection/config/environment_luna16_prepare.json
 ```
 edit the file paths based on your dictecrories:
 ```ruby
@@ -69,9 +69,9 @@ python3 luna16_prepare_images.py -c ./config/config_train_luna16_16g.json
 
 ## To Train the models (10 folds)
 
-**4.*  Confic the Model Traing Hyper-perameters
-```
-**Files: plp-capri.dhe.duke.edu:/data/usr/ft42/CVIT_XAI/MONAI/detection/config/config_train_luna16_16g.json**
+**4.**  Config the Model Traing Hyper-perameters
+```ruby
+Files: plp-capri.dhe.duke.edu:/data/usr/ft42/CVIT_XAI/MONAI/detection/config/config_train_luna16_16g.json
 ```
 ```ruby
 {
@@ -95,5 +95,31 @@ python3 luna16_prepare_images.py -c ./config/config_train_luna16_16g.json
 ```
 
 
-**2.**
+**5.** Config Environment file for training a fold, e.g: here fold0:
+```ruby
+Files: plp-capri.dhe.duke.edu:/data/usr/ft42/CVIT_XAI/MONAI/detection/config/environment_luna16_fold0.json
+```
+```ruby
+{
+    "model_path": "/data/usr/ft42/CVIT_XAI/MONAI/detection/base_models/trained_models/model_luna16_fold0.pt",
+    "data_base_dir": "/data/usr/ft42/nobackup/LUNGS_XAI_DATA/LIDC-IDRI_resample",
+    "data_list_file_path": "/data/usr/ft42/nobackup/LUNGS_XAI_DATA/LUNA16_datasplit/dataset_fold0.json",
+    "tfevent_path": "/data/usr/ft42/CVIT_XAI/MONAI/detection/base_models/tfevent_train/luna16_fold0",
+    "result_list_file_path": "/data/usr/ft42/CVIT_XAI/MONAI/detection/base_models/result/result_luna16_fold0.json"
+}
+```
+**6.** Run the Fold0 training
+```ruby
+python3 luna16_training.py -e ./config/environment_luna16_fold0.json -c ./config/config_train_luna16_16g.json
+```
+
+**7.** Run the Fold0 testing
+```ruby
+python3 luna16_testing.py -e ./config/environment_luna16_fold0.json -c ./config/config_train_luna16_16g.json
+```
+
+
+## Evaluation
+
+To perform the evaluation please follow this ref repo: https://github.com/Project-MONAI/tutorials/tree/main/detection#:~:text=3.4%20LUNA16%20Detection%20Evaluation
 
